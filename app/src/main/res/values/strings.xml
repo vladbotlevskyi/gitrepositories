@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TestAppNext</string>
+
+    <string name="UserLogin_key">login</string>
+    <string name="repoName_key">name</string>
+    <string name="realmDB_file_name">realmDB.realm</string>
+
+    <string name="default_notification_channel_id">notification_chanel</string>
+</resources>
