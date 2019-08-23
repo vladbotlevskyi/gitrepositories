@@ -39,7 +39,6 @@ public class GitRepository {
     public Observable<IUsersModel> subscribeUser() {
         return Observable.create(emitter -> {
             emitterUsers = emitter;
-            Log.i("log_tag", "subscribeUser thread  " + Thread.currentThread().getName());
             fetchUser();
             realmChangesUsers();
             getAllCount();
@@ -48,10 +47,8 @@ public class GitRepository {
 
     private void realmChangesUsers() {
         Disposable disposable = db.getAllUser().asChangesetObservable().subscribe(users -> {
-            Log.i("log_tag", "realmChangesUsers subscribe: " + users.getCollection()/*.getName()*/ + ":" + users.getCollection().size()/*.getAge()*/);
             emitterUsers.onNext(new UsersModel(users.getCollection()));
         }, throwable -> {
-            Log.i("log_tag", "realmChangesUsers throwable: " + throwable.toString());
         });
         cd.add(disposable);
     }
@@ -62,8 +59,6 @@ public class GitRepository {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(users -> {
                     boolean isSaved = db.saveUser(users);
-                    Log.i("log_tag", "fetchUser thread  " + Thread.currentThread().getName());
-                    Log.i("log_tag", "fetchUser size  " + users.size());
                 }, throwable -> {
                     Log.e("log_tag", "error " + throwable.getMessage());
                 }));
@@ -72,7 +67,6 @@ public class GitRepository {
 
     public Observable<IStatusRepository> subscribeRepository() {
         return Observable.create(emitter -> {
-            Log.i("log_tag", "subscribeRepository thread  " + Thread.currentThread().getName());
             emitterRepository = emitter;
         });
     }
@@ -99,7 +93,6 @@ public class GitRepository {
                     }
 
                     emitterRepository.onNext(new Successful(db.getAllRepositoryByName(loginName)));
-                    Log.i("log_tag", "fetchRepository subscribe:  " + repositories.size());
                 }, throwable -> {
                     if (realmRepositoryList.size() > 0) {
                         emitterRepository.onNext(new Successful(realmRepositoryList));

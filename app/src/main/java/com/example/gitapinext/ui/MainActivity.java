@@ -1,20 +1,18 @@
 package com.example.gitapinext.ui;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.gitapinext.R;
 import com.example.gitapinext.fcm.SubscribeToTopicUpdate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
-
-import com.example.gitapinext.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
-                            Log.i("log_tag", "getInstanceId failed", task.getException());
                             return;
                         }
 
@@ -45,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
                         // Log and toast
                         String msg = "token = " + token;
-                        Log.i("log_tag", msg);
 //                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -2,7 +2,6 @@ package com.example.gitapinext.fcm;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.example.gitapinext.app.AppCoordinator;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -13,16 +12,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
         String name = null;
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
             name = remoteMessage.getData().get("userId");
 
         }
 
         if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             name = remoteMessage.getNotification().getBody();
         }
         if (name != null) {

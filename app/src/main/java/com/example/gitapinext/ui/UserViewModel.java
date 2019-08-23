@@ -39,7 +39,6 @@ public class UserViewModel extends AndroidViewModel {
     }
 
     void fetchData() {
-        Log.i("log_tag", "fetchData ");
         mapCounts = new HashMap<>();
         users = new ArrayList<>();
         onChangesData();
@@ -58,8 +57,6 @@ public class UserViewModel extends AndroidViewModel {
             models.add(model);
         }
 
-        Log.i("log_tag", "userLiveData ");
-
         userLiveData.setValue(models);
     }
 
@@ -68,7 +65,6 @@ public class UserViewModel extends AndroidViewModel {
                 .subscribe(users -> {
                     if (users instanceof UsersModel) {
                         this.users = ((UsersModel) users).users;
-                        Log.i("log_tag", "onChangesData   " + this.users.size());
                         createUsers();
                     }
                     if (users instanceof CountModel) {
@@ -81,14 +77,9 @@ public class UserViewModel extends AndroidViewModel {
                             mapCounts.put(c.getUserName(), (count + 1));
                         }
                         if (this.users.size() != 0) {
-                            Log.i("log_tag", "subscribeCount createUsers");
                             createUsers();
                         }
-                        Log.i("log_tag", "onChangesData   " + ((CountModel) users).counts.size());
                     }
-
-
-                    Log.i("log_tag", "onChangesData thread  " + Thread.currentThread().getName());
                     createUsers();
                 }, throwable -> {
                     Log.e("log_tag", "onChangesData error " + throwable.toString());
@@ -98,7 +89,6 @@ public class UserViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        Log.i("log_tag", "onCleared ");
         cd.clear();
     }
 }

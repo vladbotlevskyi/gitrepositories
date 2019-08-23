@@ -1,7 +1,5 @@
 package com.example.gitapinext.repository;
 
-import android.util.Log;
-
 import com.example.gitapinext.model.Count;
 import com.example.gitapinext.model.Repository;
 import com.example.gitapinext.model.User;
@@ -23,7 +21,6 @@ public class LocalDB {
                     .schemaVersion(9)
                     .build();
             Realm.setDefaultConfiguration(config);
-            Log.i("log_tag", "getRealmDB thread  " + Thread.currentThread().getName());
             realmDB = Realm.getDefaultInstance();
         }
         return realmDB;
@@ -32,10 +29,8 @@ public class LocalDB {
 
     public boolean addCount(Count count) {
         Realm realmDB = getRealmDB();
-        Log.i("log_tag", "addCount thread1:  " + Thread.currentThread().getName());
 
         realmDB.executeTransaction(realm -> {
-            Log.i("log_tag", "addCount thread2:  " + Thread.currentThread().getName());
             Number currentIdNum = realm.where(Count.class).max("id");
             int nextId;
             if (currentIdNum == null) {
@@ -59,7 +54,6 @@ public class LocalDB {
         Realm realmDB = getRealmDB();
 //        User u = realmDB.where(User.class).equalTo("id", user.getId()).findFirst();
         realmDB.executeTransaction(realm -> {
-            Log.i("log_tag", "saveUser thread  " + Thread.currentThread().getName());
             realm.insertOrUpdate(users);
         });
         return true;
@@ -67,7 +61,6 @@ public class LocalDB {
 
     public RealmResults<User> getAllUser() {
         Realm realmDB = getRealmDB();
-        Log.i("log_tag", "getAllUser thread  " + Thread.currentThread().getName());
         RealmResults<User> list = realmDB.where(User.class).sort("login").findAllAsync();
         return list;
     }
@@ -75,21 +68,18 @@ public class LocalDB {
     public boolean saveRepository(Repository repository) {
         Realm realmDB = getRealmDB();
         realmDB.executeTransaction(realm -> {
-            Log.i("log_tag", "saveRepository thread  " + Thread.currentThread().getName());
             Repository r = realm.copyToRealmOrUpdate(repository);
         });
         return true;
     }
 
     public RealmResults<Repository> getAllRepositoryByName(String name) {
-        Log.i("log_tag", "getAllRepositoryByName thread  " + Thread.currentThread().getName());
         Realm realmDB = getRealmDB();
         RealmResults<Repository> list = realmDB
                 .where(Repository.class)
                 .and().equalTo("userNameId", name)
                 .sort("id")
                 .findAll();
-        Log.i("log_tag", "getAllRepositoryByName:  " + list.size());
         return list;
     }
 

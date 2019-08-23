@@ -44,7 +44,6 @@ public class RepositoriesViewModel extends AndroidViewModel {
     }
 
     public void onChangesData() {
-        Log.i("log_tag", "before fetchRepository");
         cd.add(repository.subscribeRepository()
                 .subscribe(result -> {
                     if (result instanceof Loading) {
@@ -54,7 +53,6 @@ public class RepositoriesViewModel extends AndroidViewModel {
                     } else if (result instanceof Successful) {
                         List<IRepositoryModel> models = new ArrayList<>();
                         List<Repository> list = ((Successful) result).repository;
-                        Log.i("log_tag", "after fetchRepository: " + list.size());
                         for (int i = 0; i < list.size(); i++) {
                             Repository r = (Repository) list.get(i);
                             models.add(new RepositoryModel("" + r.getId(), r.getName()));
@@ -67,8 +65,6 @@ public class RepositoriesViewModel extends AndroidViewModel {
                     }
 
                 }, throwable -> {
-                    Log.i("log_tag", "fetchRepository thread  " + Thread.currentThread().getName());
-
                     Log.e("log_tag", "fetchRepository: " + throwable.getMessage());
                 }));
     }
