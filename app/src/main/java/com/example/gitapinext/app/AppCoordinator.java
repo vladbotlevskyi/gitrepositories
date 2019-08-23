@@ -4,13 +4,10 @@ import com.example.gitapinext.repository.GitRepository;
 import com.example.gitapinext.repository.LocalDB;
 import com.example.gitapinext.rest.RestApiBuilder;
 
-import io.realm.Realm;
-
 public class AppCoordinator {
 
     private static AppCoordinator appCoordinator = new AppCoordinator();
     private GitRepository repository;
-    private volatile Realm instance;
 
     private AppCoordinator() {
     }

@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 
 import static com.example.gitapinext.utils.ConstantsApp.ARGS_LOGIN_NAME;
 
-public class FirstFragment extends Fragment implements OnClickNameListener {
+public class UserFragment extends Fragment implements OnClickNameListener {
 
     @BindView(R.id.first_recycler_view)
     RecyclerView recyclerView;

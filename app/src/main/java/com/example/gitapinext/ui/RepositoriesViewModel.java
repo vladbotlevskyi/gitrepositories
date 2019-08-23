@@ -29,7 +29,6 @@ public class RepositoriesViewModel extends AndroidViewModel {
     private GitRepository repository = AppCoordinator.getInstance().getRepository();
     private MutableLiveData<List<IRepositoryModel>> liveData = new MutableLiveData<>();
     private CompositeDisposable cd = new CompositeDisposable();
-    private List<IRepositoryModel> models = new ArrayList<>();
 
     public RepositoriesViewModel(@NonNull Application application) {
         super(application);
@@ -41,12 +40,10 @@ public class RepositoriesViewModel extends AndroidViewModel {
     }
 
     public void fetchData(String name) {
-        models.clear();
         repository.fetchRepository(name);
     }
 
     public void onChangesData() {
-        models.clear();
         Log.i("log_tag", "before fetchRepository");
         cd.add(repository.subscribeRepository()
                 .subscribe(result -> {
@@ -55,6 +52,7 @@ public class RepositoriesViewModel extends AndroidViewModel {
                             add(new RepositoryLoader());
                         }});
                     } else if (result instanceof Successful) {
+                        List<IRepositoryModel> models = new ArrayList<>();
                         List<Repository> list = ((Successful) result).repository;
                         Log.i("log_tag", "after fetchRepository: " + list.size());
                         for (int i = 0; i < list.size(); i++) {

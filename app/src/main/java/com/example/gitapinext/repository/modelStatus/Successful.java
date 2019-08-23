@@ -4,7 +4,7 @@ import com.example.gitapinext.model.Repository;
 
 import java.util.List;
 
-public class Successful implements IStatus {
+public class Successful implements IStatusRepository {
 
     public List<Repository> repository;
 

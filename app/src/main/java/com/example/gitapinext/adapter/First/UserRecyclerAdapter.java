@@ -28,8 +28,7 @@ public class UserRecyclerAdapter extends RecyclerView.Adapter<UserRecyclerAdapte
 
     public void setData(List<UserModel> newList) {
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new UserDiffUtilCallback(userModels, newList));
-        userModels.clear();
-        userModels.addAll(newList);
+        userModels = newList;
         diffResult.dispatchUpdatesTo(this);
     }
 

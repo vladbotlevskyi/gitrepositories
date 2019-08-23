@@ -38,7 +38,6 @@ public class RepositoriesFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Repository fragment");
     }
 
     @Nullable
@@ -51,10 +50,12 @@ public class RepositoriesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        String loginName = getArguments().getString(ARGS_LOGIN_NAME);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle("Repository " + loginName);
+
         createAdapter();
         viewModel = ViewModelProviders.of(getActivity()).get(RepositoriesViewModel.class);
         viewModel.getRepositoryModel().observe(this, observer);
-        String loginName = getArguments().getString(ARGS_LOGIN_NAME);
         viewModel.fetchData(loginName);
     }
 

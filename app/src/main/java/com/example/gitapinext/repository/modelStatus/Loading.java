@@ -1,5 +1,5 @@
 package com.example.gitapinext.repository.modelStatus;
 
-public class Loading implements IStatus {
+public class Loading implements IStatusRepository {
 
 }

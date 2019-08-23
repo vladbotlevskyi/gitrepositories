@@ -60,7 +60,7 @@ public class LocalDB {
 //        User u = realmDB.where(User.class).equalTo("id", user.getId()).findFirst();
         realmDB.executeTransaction(realm -> {
             Log.i("log_tag", "saveUser thread  " + Thread.currentThread().getName());
-            realmDB.insertOrUpdate(users);
+            realm.insertOrUpdate(users);
         });
         return true;
     }
