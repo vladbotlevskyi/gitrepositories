@@ -49,6 +49,7 @@ public class GitRepository {
         Disposable disposable = db.getAllUser().asChangesetObservable().subscribe(users -> {
             emitterUsers.onNext(new UsersModel(users.getCollection()));
         }, throwable -> {
+            Log.e("log_tag", throwable.toString());
         });
         cd.add(disposable);
     }
